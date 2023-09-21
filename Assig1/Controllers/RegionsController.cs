@@ -25,6 +25,10 @@ namespace Assig1.Controllers
             // This is the only ViewBag you can use to set the active Menu Item.
             ViewBag.Active = "Regions"; 
 
+            var regions = await _context.Regions
+                .OrderBy(r => r.RegionName)
+                .ToListAsync();
+
             return _context.Regions != null ? 
                           View(await _context.Regions.ToListAsync()) :
                           Problem("Entity set 'EnvDataContext.Regions'  is null.");
