@@ -6,7 +6,19 @@
 
 <h1>Index</h1>
 
-<p>
+<div class="row">
+    @foreach (var region in Model)
+    {
+        <a asp-action="Index" asp-controller="Countries" asp-route-id="@region.RegionId" class="card mb-3">
+            <img src="@region.ImageUrl" alt="@region.RegionName" class="card-img-top">
+            <div class="card-body text-center">
+                <h5 class="card-title">@region.RegionName</h5>
+            </div>
+        </a>
+        
+    }
+</div>
+@*<p>
     <a asp-action="Create">Create New</a>
 </p>
 <table class="table">
@@ -39,3 +51,4 @@
 }
     </tbody>
 </table>
+*@
