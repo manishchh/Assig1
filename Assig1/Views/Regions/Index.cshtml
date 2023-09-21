@@ -4,7 +4,29 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Index</h1>
+<h1>Regions</h1>
+
+
+<form asp-controller="Countries" asp-action="Index" method="get">
+    <div class="row">
+        <div class="col-md-4">
+            <select name="regionId" class="form-control">
+                <option value="">All Regions</option>
+                @foreach (var region in Model)
+                {
+                    <option value="@region.RegionId">@region.RegionName</option>
+                }
+            </select>
+        </div>
+        <div class="col-md-4">
+            <input type="text" name="searchTerm" class="form-control" placeholder="Enter country name">
+        </div>
+        <div class="col-md-4">
+            <button type="submit" class="btn btn-primary">Search</button>
+        </div>
+    </div>
+</form>
+
 
 <div class="row">
     @foreach (var region in Model)
