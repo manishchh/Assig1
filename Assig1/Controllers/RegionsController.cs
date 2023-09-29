@@ -27,11 +27,12 @@ namespace Assig1.Controllers
             ViewBag.Active = "Regions";
             
             var regions = await _context.Regions
+                .Where(r => r.RegionName != "All Regions")
                 .OrderBy(r => r.RegionName)
                 .ToListAsync();
 
             //Adds "All Regions"  at the start of the region list
-            regions.Insert(0, new Region { RegionId = 0, RegionName = "All Regions" });
+           // regions.Insert(0, new Region { RegionId = 0, RegionName = "All Regions" });
 
             return View(regions);
 
