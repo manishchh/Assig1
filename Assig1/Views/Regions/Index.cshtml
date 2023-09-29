@@ -1,4 +1,4 @@
-﻿@model Assig1.ViewModels.RegionViewModel
+﻿@model IEnumerable<Assig1.Models.Region>
 
 @{
     ViewData["Title"] = "Index";
@@ -10,19 +10,19 @@
 <form asp-controller="Countries" asp-action="Index" method="get">
     <div class="row">
         <div class="col-md-4">
-            <select asp-for="SelectedRegionId" class="form-control">
-                <option value="">All Regions</option>
-                @foreach (var region in Model.Regions)
+            <select name="RegionId" class="form-control">
+                <option value="0">All Regions</option>
+                @foreach (var region in Model)
                 {
                     <option value="@region.RegionId">@region.RegionName</option>
                 }
             </select>
-            <span asp-validation-for="SelectedRegionId" class="text-danger"></span>
+            @*<span asp-validation-for="regionId" class="text-danger"></span>*@
         </div>
-        <div class="col-md-4">
+        @*<div class="col-md-4">
             <input type="text" name="searchText" class="form-control" placeholder="Enter country name">
             <span asp-validation-for="SearchText" class="text-danger"></span>
-        </div>
+        </div>*@
         <div class="col-md-4">
             <button type="submit" class="btn btn-primary">Search</button>
         </div>
@@ -31,7 +31,7 @@
 
 
 <div class="row">
-    @foreach (var region in Model.Regions)
+    @foreach (var region in Model)
     {
         <div class="col-md-4">
             <a asp-action="Index" asp-controller="Countries" asp-route-id="@region.RegionId" class="card mb-3">
