@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Assig1.Data;
 using Assig1.Models;
-using Assig1.ViewModels;
+
 
 namespace Assig1.Controllers
 {
@@ -21,36 +21,19 @@ namespace Assig1.Controllers
         }
 
         // GET: Regions
-        public async Task<IActionResult> Index(RegionViewModel vm)
+        public async Task<IActionResult> Index()
         {
             // This is the only ViewBag you can use to set the active Menu Item.
             ViewBag.Active = "Regions";
-
-            IQueryable<Region> query = _context.Regions;
-
-            // filter by selected region
-            if (vm.SelectedRegionId.HasValue)
-            {
-                query = query
-                    .Where(r => r.RegionId == vm.SelectedRegionId);
-            }
-
-            // Filter by search text
-            if (!string.IsNullOrEmpty(vm.SearchText))
-            {
-                query = query
-                    .Where(r => r.RegionName
-                    .Contains(vm.SearchText, StringComparison.OrdinalIgnoreCase));
-            }
-
-            vm.Regions = await query
+            
+            var regions = await _context.Regions
                 .OrderBy(r => r.RegionName)
                 .ToListAsync();
 
-            return View(vm);
-            //var regions = await _context.Regions
-            //    .OrderBy(r => r.RegionName)
-            //    .ToListAsync();
+            //Adds "All Regions"  at the start of the region list
+            regions.Insert(0, new Region { RegionId = 0, RegionName = "All Regions" });
+
+            return View(regions);
 
             //return _context.Regions != null ? 
             //              View(await _context.Regions.ToListAsync()) :
