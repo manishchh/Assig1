@@ -25,21 +25,37 @@ namespace Assig1.Controllers
         // GET: Countries
         public async Task<IActionResult> Index(int? regionId)
         {
-            IQueryable<Country> query = _context.Countries;
+            //Queryable<Country> query = _context.Countries;
+            List<CountryViewModel> countries;
 
             if (regionId.HasValue && regionId.Value != 0)
             {
-                query = query.Where(c => c.RegionId == regionId.Value);
-            }
+                countries = await _context.Countries
+                    .Where(c =>  c.RegionId == regionId.Value)
+                    .Select(c => new CountryViewModel
+                    {
+                        CountryId = c.CountryId,
+                        CountryName = c.CountryName,   
+                        RegionName = c.Region.RegionName,
+                        ImageUrl = c.ImageUrl
+                    })
+                    .ToListAsync();
 
-            var countries = await query
-                .Select(c => new CountryViewModel
-                {
-                    CountryId = c.CountryId,
-                    CountryName = c.CountryName,
-                    RegionName = c.Region.RegionName
-                })
-                .ToListAsync();
+               
+            }
+            else
+            {
+                countries = await _context.Countries
+                   .Select(c => new CountryViewModel
+                   {
+                       CountryId = c.CountryId,
+                       CountryName = c.CountryName,
+                       RegionName = c.Region.RegionName,
+                       ImageUrl = c.ImageUrl
+                   })
+                   .ToListAsync();
+            }
+           
 
             return View(countries);
             //var envDataContext = _context.Countries.Include(c => c.Region);
