@@ -34,14 +34,16 @@
                @country.ImageUrl
             </td>
             <td>
-               @country.RegionName
+               @country.RegionName 
             </td>
-           @* <td>
-                <a asp-action="Edit" asp-route-id="@item.CountryId">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.CountryId">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.CountryId">Delete</a>
-            </td>*@
+            <td>
+                 
+            </td>
         </tr>
 }
     </tbody>
 </table>
+
+
+<a href="@Url.Action("Index", "Regions")" class="btn btn-primary">Back to Regions List</a>
+
