@@ -74,6 +74,8 @@ namespace Assig1.Controllers
 
             var country = await _context.Countries
                 .Include(c => c.Region)
+                .Include(c => c.TemperatureData)
+                .Include(c => c.CountryEmissions)
                 .FirstOrDefaultAsync(m => m.CountryId == id);
             if (country == null)
             {
