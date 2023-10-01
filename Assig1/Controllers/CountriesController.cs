@@ -37,7 +37,7 @@ namespace Assig1.Controllers
                     {
                         CountryId = c.CountryId,
                         CountryName = c.CountryName,   
-                        RegionName = c.Region.RegionName,
+                        RegionName = c.Region != null? c.Region.RegionName : "N/A",
                         ImageUrl = c.ImageUrl
                     })
                     .ToListAsync();
@@ -52,7 +52,7 @@ namespace Assig1.Controllers
                    {
                        CountryId = c.CountryId,
                        CountryName = c.CountryName,
-                       RegionName = c.Region.RegionName,
+                       RegionName = c.Region != null? c.Region.RegionName : "N/A",
                        ImageUrl = c.ImageUrl
                    })
                    .ToListAsync();
