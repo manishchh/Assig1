@@ -4,8 +4,19 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Index</h1>
+<h1>Countries</h1>
 
+<div class="container mt-4">
+    <!-- Show the selected region using a Bootstrap panel -->
+    @if (!string.IsNullOrEmpty(Model.FirstOrDefault()?.RegionName))
+    {
+
+        <div class="alert alert-info">
+            Selected Region: @Model.FirstOrDefault()?.RegionName
+        </div>
+    }
+</div>
+@*
 <p>
     <a asp-action="Create">Create New</a>
 </p>
@@ -45,5 +56,5 @@
 </table>
 
 
-<a href="@Url.Action("Index", "Regions")" class="btn btn-primary">Back to Regions List</a>
+<a href="@Url.Action("Index", "Regions")" class="btn btn-primary">Back to Regions List</a>*@
 
