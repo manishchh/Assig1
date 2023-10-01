@@ -25,7 +25,9 @@
                     <div class="card-body">
                         <h5 class="card-title">@country.CountryName</h5>
                         <p class="card-text">Region: @country.RegionName</p>
-                        <button type="button" class="btn btn-outline-success">Emission</button>
+                        <a asp-action="Details" asp-controller="Countries" asp-route-id="@country.CountryId" class="btn btn-outline-success">
+                            View Emission & Temperature
+                        </a>
                         <button type="button" class="btn btn-outline-warning">Cities</button>
                     </div>
                 </div>
