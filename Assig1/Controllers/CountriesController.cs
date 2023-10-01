@@ -32,6 +32,7 @@ namespace Assig1.Controllers
             {
                 countries = await _context.Countries
                     .Where(c =>  c.RegionId == regionId.Value)
+                    .OrderBy(c => c.CountryName)
                     .Select(c => new CountryViewModel
                     {
                         CountryId = c.CountryId,
@@ -46,6 +47,7 @@ namespace Assig1.Controllers
             else
             {
                 countries = await _context.Countries
+                   .OrderBy(c => c.CountryName)
                    .Select(c => new CountryViewModel
                    {
                        CountryId = c.CountryId,
