@@ -95,8 +95,15 @@ namespace Assig1.Controllers
                     AverageCountryEmission = x.Average(y => y.Value) ?? 0,
                     MaxCountryEmission = x.Max(y => y.Value) ?? 0,
                     MinimumCountryEmission = x.Min(y => y.Value) ?? 0
-                }).ToList()
-               
+                }).ToList(),
+               CountryYearlyTemperature = country.TemperatureData.GroupBy(x => x.Year)
+               .Select(x => new CountryYearlyTemperature
+               {
+                   Year = x.Key,
+                   AverageCountryTemperature = x.Average(y => y.Value) ?? 0,
+                   MaxCountryTemperature = x.Max(y => y.Value) ?? 0,
+                   MinimumCountryTemperature = x.Min(y => y.Value) ?? 0
+               }).ToList(),
             };
 
             return View(countryDetailsVewModel);
