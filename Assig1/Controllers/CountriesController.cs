@@ -81,8 +81,25 @@ namespace Assig1.Controllers
             {
                 return NotFound();
             }
+            var countryDetailsVewModel = new CountryDetailViewModel()
+            {
+                CountryName = country.CountryName,
+                ImageUrl = country.ImageUrl,
+                RegionName = country.Region?.RegionName ?? "N/A",
+                CountryYearlyEmissions = country.CountryEmissions.GroupBy(x => x.Year)
+                .Select(x => new CountryYearlyEmissions
+                {
+                    Year = x.Key ?? 0,
+                    ElementName = x.FirstOrDefault()?.ItemElement?.Element.ElementName ?? "N/A",
+                    ItemName = x.FirstOrDefault()?.ItemElement?.Item.ItemName ?? "N/A",
+                    AverageCountryEmission = x.Average(y => y.Value) ?? 0,
+                    MaxCountryEmission = x.Max(y => y.Value) ?? 0,
+                    MinimumCountryEmission = x.Min(y => y.Value) ?? 0
+                }).ToList()
+               
+            };
 
-            return View(country);
+            return View(countryDetailsVewModel);
         }
     }
 }

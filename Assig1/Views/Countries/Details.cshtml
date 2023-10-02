@@ -1,12 +1,50 @@
-﻿@model Assig1.Models.Country
+﻿@model Assig1.ViewModels.CountryDetailViewModel;
 
 @{
     ViewData["Title"] = "Details";
 }
 
 <h1>Details</h1>
+<div class="container">
+    <div class="card mt-5">
+        <img src="@Model.ImageUrl" class="card-img-top" alt="@Model.CountryName">
+        <div class="card-body">
+            <h5 class="card-title">@Model.CountryName</h5>
+            <h5 class="card-title">@Model.RegionName</h5>
 
-<div>
+
+            <h6>Emissions Data:</h6>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Year</th>
+                        <th>Average Emission</th>
+                        <th>Min Emission</th>
+                        <th>Max Emission</th>
+                        <th>Element</th>
+                        <th>Item</th>
+
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var emission in Model.CountryYearlyEmissions)
+                    {
+                        <tr>
+                            <td>@emission.Year</td>
+                            <td>@emission.AverageCountryEmission</td>
+                            <td>@emission.MinimumCountryEmission</td>
+                            <td>@emission.MaxCountryEmission</td>
+                            <td>@emission.ElementName</td>
+                            <td>@emission.ItemName</td>
+
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+@*<div>
     <h4>Country</h4>
     <hr />
     <dl class="row">
@@ -35,7 +73,7 @@
             @Html.DisplayFor(model => model.Region.RegionId)
         </dd>
     </dl>
-</div>
+</div>*@
 <div>
     <a asp-action="Edit" asp-route-id="@Model?.CountryId">Edit</a> |
     <a asp-action="Index">Back to List</a>
