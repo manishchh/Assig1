@@ -28,7 +28,9 @@
                         <a asp-action="Details" asp-controller="Countries" asp-route-id="@country.CountryId" class="btn btn-outline-success">
                             View Emission & Temperature
                         </a>
-                        <button type="button" class="btn btn-outline-warning">Cities</button>
+                        <a asp-action="Index" asp-controller="Cities" asp-route-id="@country.CountryId" class="btn btn-outline-success">
+                            View Cities
+                        </a>
                     </div>
                 </div>
             </div>
