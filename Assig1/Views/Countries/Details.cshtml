@@ -41,6 +41,28 @@
                     }
                 </tbody>
             </table>
+            <h6>Temperature Data:</h6>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Year</th>
+                        <th>Average Temperature</th>
+                        <th>Min Temperature</th>
+                        <th>Max Temperature</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var temperature in Model.CountryYearlyTemperature)
+                    {
+                        <tr>
+                            <td>@temperature.Year</td>
+                            <td>@temperature.AverageCountryTemperature</td>
+                            <td>@temperature.MinimumCountryTemperature</td>
+                            <td>@temperature.MaxCountryTemperature</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
         </div>
     </div>
 </div>
