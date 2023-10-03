@@ -1,4 +1,7 @@
-﻿namespace Assig1.ViewModels
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+
+namespace Assig1.ViewModels
 {
     public class CityAirQualityDetailViewModel
     {
