@@ -1,11 +1,62 @@
-﻿@model Assig1.Models.City
+﻿@model Assig1.ViewModels.CityAirQualityDetailViewModel
 
 @{
     ViewData["Title"] = "Details";
 }
 
-<h1>Details</h1>
+<h1>Air Quality Data</h1>
 
+<h2>@Model.CityName</h2>
+<p>Country: @Model.CountryName</p>
+@if (!string.IsNullOrEmpty(Model.RegionName))
+{
+    <p>Region: @Model.RegionName</p>
+}
+
+<h3>Air Quality Data</h3>
+
+<select id="yearSelect">
+    @foreach (var data in Model.AirQualityData)
+    {
+        <option value="@data.Year">@data.Year</option>
+    }
+</select>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Item</th>
+            <th>Annual Mean PM10</th>
+            <th>Annual Mean PM2.5</th>
+            <th>Monitoring Stations</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var data in Model.AirQualityData)
+        {
+            <tr data-year="@data.Year">
+                <td>@data.Year</td>
+                <td>@data.AnnualMeanPmp10 (@data.AnnualMeanPmp10Value)</td>
+                <td>@data.AnnualMeanPmp25 (@data.AnnualMeanPmp25Value)</td>
+                <td>
+                    @foreach (var station in data.AirQualityCollectionTypes)
+                    {
+                        <span>@station.StationNumber - @station.StationType</span>
+
+                        <br />
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+<div class="container mt-4">
+    <a asp-action="Index" asp-controller="Cities" class="btn btn-primary">Back to Cities</a>
+</div>
+
+
+
+@*
 <div>
     <h4>City</h4>
     <hr />
@@ -28,3 +79,4 @@
     <a asp-action="Edit" asp-route-id="@Model?.CityId">Edit</a> |
     <a asp-action="Index">Back to List</a>
 </div>
+*@
