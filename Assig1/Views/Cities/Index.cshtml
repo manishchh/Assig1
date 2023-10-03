@@ -1,12 +1,47 @@
-﻿@model IEnumerable<Assig1.Models.City>
+﻿@model Assig1.ViewModels.CityViewModel
 
 @{
     ViewData["Title"] = "Index";
 }
 
-<h1>Index</h1>
+<h1>Cities</h1>
 
-<p>
+<div class="container">
+    <div class="card mt-5">
+        <img src="@Model.ImageUrl" class="card-img-top" alt="@Model.CountryName">
+        <div class="card-body">
+            <h5 class="card-title">Country: @Model.CountryName</h5>
+            <h5 class="card-title">Region: @Model.RegionName</h5>
+            <input type="text" id="searchText" placeholder="Search cities..." />
+            <table class="table mt-4">
+                <thead>
+                    <tr>
+                        <th>City Name</th>
+                        <th>Earliest Year</th>
+                        <th>Latest Year</th>
+                        <th>Total Records</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var city in Model.Cities)
+                    {
+                        <tr>
+                            <td>@city.CityName</td>
+                            <td>@city.EarliestYear</td>
+                            <td>@city.LatestYear</td>
+                            <td>@city.AirQualityDataCount</td>
+                            <td>
+                                <a asp-action="Details" asp-controller="Cities" asp-route-cityId="@city.CityId" class="btn btn-info">View Air Quality Data</a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+@*<p>
     <a asp-action="Create">Create New</a>
 </p>
 <table class="table">
@@ -38,4 +73,4 @@
         </tr>
 }
     </tbody>
-</table>
+</table>*@
