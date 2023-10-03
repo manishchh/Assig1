@@ -1,3 +1,6 @@
+
+
+
 html {
   font-size: 14px;
 }
@@ -16,3 +19,16 @@ html {
 body {
   margin-bottom: 60px;
 }
+
+
+.custom-card {
+    transition: all 0.3s ease;
+    border: none;
+    cursor: pointer;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+
+.custom-card:hover {
+    transform: scale(1.03);
+    box-shadow: 0 8px 15px rgba(0,0,0,0.1);
+ }

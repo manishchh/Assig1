@@ -10,19 +10,16 @@
 <form asp-controller="Countries" asp-action="Index" method="get">
     <div class="row">
         <div class="col-md-4">
-            <select name="RegionId" class="form-control">
-                <option value="0">All Regions</option>
-                @foreach (var region in Model)
-                {
-                    <option value="@region.RegionId">@region.RegionName</option>
-                }
-            </select>
-            @*<span asp-validation-for="regionId" class="text-danger"></span>*@
+            <div class=" row justify-content-center" >
+                <select name="RegionId" class="form-control">
+                    <option value="0">All Regions</option>
+                    @foreach (var region in Model)
+                    {
+                        <option value="@region.RegionId">@region.RegionName</option>
+                    }
+                </select>
+             </div>
         </div>
-        @*<div class="col-md-4">
-            <input type="text" name="searchText" class="form-control" placeholder="Enter country name">
-            <span asp-validation-for="SearchText" class="text-danger"></span>
-        </div>*@
         <div class="col-md-4">
             <button type="submit" class="btn btn-primary">Search</button>
         </div>
@@ -33,8 +30,8 @@
 <div class="row">
     @foreach (var region in Model)
     {
-        <div class="col-md-4">
-            <a asp-action="Index" asp-controller="Countries" asp-route-id="@region.RegionId" class="card mb-3">
+        <div class="col-md-4 mb-4">
+            <a asp-action="Index" asp-controller="Countries" asp-route-id="@region.RegionId" class="card custom-card">
                 <img src="@region.ImageUrl" alt="@region.RegionName" class="card-img-top">
                 <div class="card-body text-center">
                     <h5 class="card-title">@region.RegionName</h5>
