@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Assig1.Data;
 using Assig1.Models;
+using Assig1.ViewModels;
+using System.Diagnostics.Metrics;
 
 namespace Assig1.Controllers
 {
@@ -20,10 +22,43 @@ namespace Assig1.Controllers
         }
 
         // GET: Cities
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int? countryId, string searchText="")
         {
-            var envDataContext = _context.Cities.Include(c => c.Country);
-            return View(await envDataContext.ToListAsync());
+         
+            if (countryId == null)
+            {
+                return NotFound();
+            }
+
+            var country = await _context.Countries
+                                        .Include(c => c.Cities)
+                                        .ThenInclude(c => c.AirQualityData)
+                                        .FirstOrDefaultAsync(c => c.CountryId == countryId);
+
+            if (country == null)
+            {
+                return NotFound();
+            }
+
+            var viewModel = new CityViewModel
+            {
+                CountryId = country.CountryId,
+                CountryName = country.CountryName,
+                ImageUrl = country?.ImageUrl,
+                RegionName = country?.Region != null? country.Region.RegionName :"N/A",
+                Cities = country.Cities
+                           .Where(c => string.IsNullOrEmpty(searchText) || c.CityName.StartsWith(searchText))
+                           .OrderBy(c => c.CityName)
+                           .Select(c => new CityDetailViewModel
+                           {
+                               CityId = c.CityId,
+                               CityName = c.CityName,
+                               EarliestYear = c.AirQualityData?.Min(aqd => aqd.Year) ?? 0,
+                               LatestYear = c.AirQualityData?.Max(aqd => aqd.Year) ?? 0
+                           }).ToList()
+            };
+
+            return View(viewModel);
         }
 
         // GET: Cities/Details/5
