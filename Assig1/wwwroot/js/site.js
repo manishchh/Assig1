@@ -15,3 +15,7 @@ document.getElementById("yearSelect").addEventListener("change", function (e) {
         }
     });
 });
+function goBack() {
+    window.history.back();
+}
+
