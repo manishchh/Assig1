@@ -71,13 +71,43 @@ namespace Assig1.Controllers
 
             var city = await _context.Cities
                 .Include(c => c.Country)
+                .Include(c=>c.AirQualityData)
                 .FirstOrDefaultAsync(m => m.CityId == id);
+
+
             if (city == null)
             {
                 return NotFound();
             }
 
-            return View(city);
+            var cityDetails = new CityAirQualityDetailViewModel()
+            {
+                CityName = city.CityName,
+                CountryName = city.Country.CountryName,
+                RegionName = city.Country.Region?.RegionName,
+
+                AirQualityData = new List<CityAirQualityData>()
+            };
+            foreach (var item in city.AirQualityData)
+            {
+                var airQualityDataCollectionTypes = _context.AirQualityData.Include(a => a.AirQualityStations).Where(x => x.AqdId == item.AqdId).FirstOrDefault();
+                cityDetails.AirQualityData.Add(new CityAirQualityData()
+                {
+                    AnnualMeanPmp10 = item.AnnualMeanPm10,
+                    AnnualMeanPmp25 = item.AnnualMeanPm25,
+                    AnnualMeanPmp10Value = item.AnnualMean,
+                    AnnualMeanPmp25Value = item.AnnualMeanUgm3,
+                    Year =item.Year,
+                    AirQualityCollectionTypes = airQualityDataCollectionTypes.AirQualityStations.Select(x=> new AirQualityDataCollectionTypes()
+                    {
+                        StationNumber = x.Number,
+                        StationType = x.StationType?.StationType ?? "Unknown"
+                        
+                    }).ToList() 
+                });
+
+            }
+            return View(cityDetails);
         }
 
     }
